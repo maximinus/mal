@@ -44,7 +44,7 @@ all help:
 # Command line settings
 #
 
-MAL_IMPL = js
+MAL_IMPL = javascript
 
 # cbm or qbasic
 basic_MODE = cbm
@@ -83,7 +83,7 @@ IMPLS = ada awk bash basic c chuck clojure coffee common-lisp cpp crystal cs d d
 	guile haskell haxe hy io java js julia kotlin livescript logo lua make mal \
 	matlab miniMAL nasm nim objc objpascal ocaml perl perl6 php picolisp plpgsql \
 	plsql powershell ps python r racket rexx rpython ruby rust scala scheme skew \
-	swift swift3 tcl ts vb vhdl vimscript yorick
+	swift swift3 tcl ts vb vhdl vimscript yorick javascript
 
 EXTENSION = .mal
 
@@ -148,6 +148,8 @@ endif
 #
 # Implementation specific utility functions
 #
+
+javascript_STEP_TO_PROG =  javascript/$($(1)).js
 
 basic_STEP_TO_PROG_cbm    = basic/$($(1)).bas
 basic_STEP_TO_PROG_qbasic = basic/$($(1))
