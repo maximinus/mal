@@ -71,3 +71,6 @@ exports.S7_add = primitives.S7_add = S7_add;
 exports.S7_subtract = primitives.S7_subtract = S7_subtract;
 exports.S7_multiply = primitives.S7_multiply = S7_multiply;
 exports.S7_divide = primitives.S7_divide = S7_divide;
+
+exports.check_total_args = primitives.check_total_args = check_total_args
+exports.check_arg_type = primitives.check_arg_type = check_arg_type

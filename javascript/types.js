@@ -4,6 +4,19 @@ if (typeof module === 'undefined') {
     var exports = types;
 };
 
+// exceptions
+function BlankTokenException(msg='') {};
+function NoStartException(msg='') {};
+function NoEndException(msg='') {};
+function DivisionByZeroException(msg='') {};
+function SymbolNotFoundException(msg='') {};
+function ListIndexException(msg='') {};
+function NotEnoughArgumentsException(msg='') {};
+function TooManyArgumentsException(msg='') {};
+function WrongTypeException(msg='') {};
+function SyntaxErrorException(msg='') {};
+
+// types
 class S7Type {
     constructor(value=null) {
         this.value = value;
@@ -11,6 +24,10 @@ class S7Type {
 
     toString() {
         return 'RootType';
+    };
+
+    match_symbol(sym) {
+        return false;
     };
 };
 
@@ -22,7 +39,7 @@ class ListType extends S7Type {
     first() {
         // return the first item or raise an error
         if(this.value.length < 1) {
-            throw types.ListIndexException('0');
+            throw new ListIndexException('0');
         }
         return this.value[0];
     };
@@ -30,7 +47,7 @@ class ListType extends S7Type {
     rest() {
         // return a list of all but the first, or raise an error
         if(this.value.length < 2) {
-            throw types.ListIndexexception('1');
+            throw new ListIndexException('1');
         }
         return this.value.slice(1);
     };
@@ -55,6 +72,29 @@ class IntegerType extends S7Type {
     };
 };
 
+class BoolType extends S7Type {
+    constructor(value=true) {
+        super(value);
+    };
+
+    toString() {
+        if(this.value == true) {
+            return "True";
+        }
+        return "False";
+    };
+}
+
+class NilType extends S7Type {
+    constructor(value) {
+        super(value);
+    };
+
+    toString() {
+        return 'Null';
+    };
+};
+
 class SymbolType extends S7Type {
     constructor(value) {
         super(value);
@@ -63,6 +103,13 @@ class SymbolType extends S7Type {
     toString() {
         return this.value;
     };
+
+    match_symbol(sym) {
+        if(sym === this.value) {
+            return true;
+        }
+        return false;
+    }
 };
 
 class FunctionType extends S7Type {
@@ -75,30 +122,21 @@ class FunctionType extends S7Type {
     };
 };
 
-// exceptions
-function BlankTokenException(msg='') {};
-function NoStartException(msg='') {};
-function NoEndException(msg='') {};
-function DivisionByZeroException(msg='') {};
-function SymbolNotFoundException(msg='') {};
-function ListindexException(msg='') {};
-function NotEnoughArgumentsException(msg='') {};
-function TooManyArgumentsException(msg='') {};
-function WrongTypeException(msg='') {};
-
 // Exports
 exports.S7Type = types.S7Type = S7Type;
 exports.ListType = types.ListType = ListType;
 exports.IntegerType = types.IntegerType = IntegerType;
 exports.SymbolType = types.SymbolType = SymbolType;
 exports.FunctionType = types.FunctionType = FunctionType;
+exports.BoolType = types.BoolType = BoolType;
 
 exports.BlankTokenException = types.BlankTokenException = BlankTokenException
 exports.NoStartException = types.NoStartException = NoStartException
 exports.NoEndException = types.NoEndException = NoEndException
 exports.DivisionByZeroException = types.DivisionByZeroException = DivisionByZeroException
 exports.SymbolNotFoundException = types.SymbolNotFoundException = SymbolNotFoundException
-exports.ListindexException = types.ListindexException = ListindexException
+exports.ListIndexException = types.ListIndexException = ListIndexException
 exports.NotEnoughArgumentsException = types.NotEnoughArgumentsException = NotEnoughArgumentsException
 exports.TooManyArgumentsException = types.TooManyArgumentsException = TooManyArgumentsException
 exports.WrongTypeException = types.WrongTypeException = WrongTypeException
+exports.SyntaxErrorException = types.SyntaxErrorException = SyntaxErrorException
