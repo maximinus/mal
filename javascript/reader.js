@@ -47,14 +47,10 @@ function read_form(reader) {
     }
 }
 
-function BlankTokenException(msg) {};
-function NoStartException(msg) {};
-function NoEndException(msg) {};
-
 function read_str(str) {
     var tokens = tokenize(str);
     if(tokens.length === 0) {
-        throw new BlankTokenException();
+        throw new types.BlankTokenException();
     }
     return read_form(new Reader(tokens))
 };
@@ -64,11 +60,11 @@ function read_list(reader, start='(', end=')') {
     var ast = new types.ListType();
     var token = reader.next();
     if(token !== start) {
-        throw new NoStartException("expected '" + start + "'");
+        throw new types.NoStartException("expected '" + start + "'");
     }
     while((token = reader.peek()) !== end) {
         if(!token) {
-            throw new NoEndException("expected '" + end + "', got EOF");
+            throw new types.NoEndException("expected '" + end + "', got EOF");
         }
         ast.append(read_form(reader));
     }
@@ -88,9 +84,7 @@ function read_atom(reader) {
     }
 };
 
-
 exports.Reader = reader.Reader = Reader;
-exports.BlankTokenException = reader.BlankTokenException = BlankTokenException;
 exports.tokenize = reader.tokenize = tokenize;
 exports.read_form = reader.read_form = read_form;
 exports.read_str = reader.read_str = read_str;
