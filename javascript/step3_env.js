@@ -62,11 +62,12 @@ function let_form(args, env) {
     var env_set = args[0].value
     var index = 0;
     while(index < env_set.length) {
-        new_env.set(env_set[index].value, env_set[index + 1]);
+        // make sure we evaluate the 2nd element
+        evaluated_element = EVAL(env_set[index + 1], new_env);
+        new_env.set(env_set[index].value, evaluated_element);
         index += 2
     }
     // finally, call EVAL using this new environment
-    console.log(args[1]);
     return EVAL(args[1], new_env);
 };
 
