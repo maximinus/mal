@@ -75,13 +75,21 @@ function read_list(reader, start='(', end=')') {
 function read_atom(reader) {
     var token = reader.next();
     // got a number?
-    if (token.match(/^-?[0-9]+$/)) {
+    if(token.match(/^-?[0-9]+$/)) {
         return new types.IntegerType(parseInt(token,10));
-    } 
-    else {
-        // default is a symbol - i.e. it's nothing else
-        return new types.SymbolType(token);
     }
+    // check for special symbols here - true / false / nil
+    if(token == 'true') {
+        return new types.BoolType(true);
+    }
+    if(token == 'false') {
+        return new types.BoolType(false);
+    }
+    if(token == 'nil') {
+        return new types.NilType();
+    }
+    // default is a symbol
+    return new types.SymbolType(token);
 };
 
 exports.Reader = reader.Reader = Reader;

@@ -79,9 +79,9 @@ class BoolType extends S7Type {
 
     toString() {
         if(this.value == true) {
-            return "True";
+            return "true";
         }
-        return "False";
+        return "false";
     };
 }
 
@@ -91,7 +91,7 @@ class NilType extends S7Type {
     };
 
     toString() {
-        return 'Null';
+        return 'nill';
     };
 };
 
