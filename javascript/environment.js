@@ -6,10 +6,24 @@ if (typeof module !== 'undefined') {
 }
 
 class Environment {
-    constructor(env={}, outer=null) {
+    constructor(env={}, outer=null, binds=null, exprs=null) {
         this.outer = outer;
         this.data = env;
+        if(binds != null) {
+            this.set_bindings(binds, exprs);
+        }
     };
+
+    set_bindings(binds, exprs) {
+        if(exprs == null) {
+           throw new types.NotEnoughArgumentsException('No exprs with binds');
+        }
+        if(binds.length != exprs.length) {
+            throw new types.NotEnoughArgumentsException('Binds.length != Expres.length');
+        }
+        for(var i=0; i<binds.length; i++) {
+            this.set(binds[i], exprs[i]);
+        };
 
     set(key, value) {
         this.data[key] = value;

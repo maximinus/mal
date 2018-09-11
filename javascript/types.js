@@ -29,6 +29,10 @@ class S7Type {
     match_symbol(sym) {
         return false;
     };
+
+    as_bool() {
+        return true;
+    };
 };
 
 class ListType extends S7Type {
@@ -83,6 +87,10 @@ class BoolType extends S7Type {
         }
         return "false";
     };
+
+    as_bool() {
+        return this.value;
+    };
 }
 
 class NilType extends S7Type {
@@ -92,6 +100,10 @@ class NilType extends S7Type {
 
     toString() {
         return 'nill';
+    };
+
+    as_bool() {
+        return false;
     };
 };
 
@@ -118,7 +130,8 @@ class FunctionType extends S7Type {
     };
 
     toString() {
-        return this.value.name + '()';
+        // you can use this.value.name
+        return '#<function>';
     };
 };
 

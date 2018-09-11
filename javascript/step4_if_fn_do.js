@@ -71,6 +71,41 @@ function let_form(args, env) {
     return EVAL(args[1], new_env);
 };
 
+function do_form(args, env) {
+    // args is a JS list
+    primitives.check_total_args(args, 1, 1);
+    if(!(args[0] instanceof types.ListType)) {
+        throw new types.SyntaxErrorException('First argument is not a list in do');
+    }
+    var result = new types.NilType();
+    for(var i of args[0].value) {
+        result = eval_ast(i, env);
+    }
+    return result;
+};
+
+function if_form(args, env) {
+    // args is a JS list
+    primitives.check_total_args(args, 2, 3);
+    // evaluate first param
+    var condition = EVAL(args[1], env);
+    if(condition.as_bool() == true) {
+        // evaluate and return 2nd argument
+        return EVAL(args[2], env);
+    }
+    // false, do the 3rd argument if it exists
+    if(args.length == 3) {
+        return EVAL(args[3], env);
+    }
+    // just return nil
+    return new types.NilType();
+};
+
+function fn_form(args, env) {
+    // args is a JS list
+};
+
+
 // eval
 function EVAL(ast, env) {
     // list or not a list?
@@ -79,13 +114,19 @@ function EVAL(ast, env) {
         if(ast.value.length == 0) {
             return ast;
         }
-        // handle def! and let*
+        // handle special forms
         var func = ast.first()
         if(func.match_symbol('def!')) {
             return def_form(ast.rest(), env);
         }
         if(func.match_symbol('let*')) {
             return let_form(ast.rest(), env);
+        }
+        if(func.match_symbol('do')) {
+            return do_form(ast.rest(), env);   
+        }
+        if(func.match_symbol('if')) {
+            return if_form(ast.rest(), env);   
         }
         // no, call the function
         var new_list = eval_ast(ast, env);
