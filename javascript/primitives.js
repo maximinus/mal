@@ -67,6 +67,45 @@ function S7_divide(args) {
 };
 
 
+function S7_prn(args) {
+    // call pr_str on the first parameter with print_readably set to true, prints the result to the screen and then return nil. 
+};
+
+function S7_list(args) {
+    // take the parameters and return them as a list.
+};
+
+function S7_list_p(args) {
+    // ?return true if the first parameter is a list, false otherwise.
+};
+
+function S7_empty_p(args) {
+    // treat the first parameter as a list and return true if the list is empty and false if it contains any elements.
+};
+
+function S7_count(args) {
+    // treat the first parameter as a list and return the number of elements that it contains.
+
+function S7_equal(args) {
+    // pass
+};
+
+function S7_less_than(args) {
+    // pass
+};
+
+function S7_less_or_equal(args) {
+    // pass
+};
+
+function S7_greater_than(args) {
+    // pass
+};
+
+function S7_greater_than_or_equal(args) {
+    // pass
+}
+
 // Exports
 exports.S7_add = primitives.S7_add = S7_add;
 exports.S7_subtract = primitives.S7_subtract = S7_subtract;

@@ -108,10 +108,11 @@ function fn_form(args, env) {
     // call EVAL on the second paramter, using the new environment
     // use the result as the result of the closure
     primitives.check_total_args(args, 2, 2);
-    return new types.FunctionType(function() { new_env = env.get_child(args[0].value, arguments);
-                                               return EVAL(args[1], new_env) });
+    return new types.FunctionType(
+        function() { new_env = env.get_child(args[0].value, arguments[0]);
+                     return EVAL(args[1], new_env);
+                   });
 };
-
 
 // eval
 function EVAL(ast, env) {
