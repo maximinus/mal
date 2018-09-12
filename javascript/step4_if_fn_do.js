@@ -103,6 +103,13 @@ function if_form(args, env) {
 
 function fn_form(args, env) {
     // args is a JS list
+    // create a new environment using env as the outer parameter,
+    //  the first parameter as the binds parameter, and the parameters to the closure as exprs
+    // call EVAL on the second paramter, using the new environment
+    // use the result as the result of the closure
+    primitives.check_total_args(args, 2, 2);
+    return new types.FunctionType(function() { new_env = env.get_child(args[0].value, arguments);
+                                               return EVAL(args[1], new_env) });
 };
 
 
@@ -116,6 +123,12 @@ function EVAL(ast, env) {
         }
         // handle special forms
         var func = ast.first()
+
+        // is it a function?
+        if(ast instanceof types.FunctionType) {
+            return ast.value(ast.rest());
+        }
+
         if(func.match_symbol('def!')) {
             return def_form(ast.rest(), env);
         }
@@ -127,6 +140,9 @@ function EVAL(ast, env) {
         }
         if(func.match_symbol('if')) {
             return if_form(ast.rest(), env);   
+        }
+        if(func.match_symbol('fn*')) {
+            return fn_form(ast.rest(), env);
         }
         // no, call the function
         var new_list = eval_ast(ast, env);

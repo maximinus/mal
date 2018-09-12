@@ -16,14 +16,15 @@ class Environment {
 
     set_bindings(binds, exprs) {
         if(exprs == null) {
-           throw new types.NotEnoughArgumentsException('No exprs with binds');
+            throw new types.NotEnoughArgumentsException('No exprs with binds');
         }
         if(binds.length != exprs.length) {
-            throw new types.NotEnoughArgumentsException('Binds.length != Expres.length');
+            throw new types.NotEnoughArgumentsException('Binds.length != Exprs.length');
         }
         for(var i=0; i<binds.length; i++) {
             this.set(binds[i], exprs[i]);
-        };
+        }
+    };
 
     set(key, value) {
         this.data[key] = value;
@@ -44,13 +45,13 @@ class Environment {
         var value = this.find(key)
         // if null, we went up the entire chain!
         if(value == null) {
-            throw new types.SymbolNotFoundException(key.toString());
+            throw new types.SymbolNotFoundException(key);
         }
         return value[key];
     };
 
-    get_child() {
-        return new Environment({}, this);
+    get_child(binds=null, exprs=null) {
+        return new Environment({}, this, binds, exprs);
     };
 };
 

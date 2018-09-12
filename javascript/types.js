@@ -64,6 +64,10 @@ class ListType extends S7Type {
         var str = this.value.map(function(e) { return e.toString(); });
         return 'List(' + str.join(', ') + ')';
     };
+
+    length() {
+        return this.values.length;
+    };
 };
 
 class IntegerType extends S7Type {
@@ -131,6 +135,7 @@ class FunctionType extends S7Type {
 
     toString() {
         // you can use this.value.name
+        this.value(new IntegerType(5));
         return '#<function>';
     };
 };
