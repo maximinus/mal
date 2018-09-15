@@ -1,7 +1,7 @@
 import { _equal_Q, _clone, _keyword, _keyword_Q } from './types'
 import { _list_Q, Vector, _assoc_BANG, Atom } from './types'
 import { pr_str } from './printer'
-import { readline } from './node_readline'
+// import { readline } from './node_readline'
 import { read_str } from './reader'
 
 function _error(e) { throw new Error(e) }
@@ -58,7 +58,7 @@ export const core_ns = new Map([
     ['prn', (...a) => console.log(...a.map(e => pr_str(e,1))) || null],
     ['println', (...a) => console.log(...a.map(e => pr_str(e,0))) || null],
     ['read-string', read_str],
-    ['readline', readline],
+    // ['readline', readline],
     ['slurp', slurp],
 
     ['<' , (a,b) => a<b],

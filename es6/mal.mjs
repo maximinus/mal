@@ -1,4 +1,3 @@
-import { readline } from './node_readline'
 import { _list_Q, _malfunc, _malfunc_Q } from './types'
 import { BlankException, read_str } from './reader'
 import { pr_str } from './printer'
@@ -143,6 +142,7 @@ REP('(def! *gensym-counter* (atom 0))')
 REP('(def! gensym (fn* [] (symbol (str \"G__\" (swap! *gensym-counter* (fn* [x] (+ 1 x)))))))')
 REP('(defmacro! or (fn* (& xs) (if (empty? xs) nil (if (= 1 (count xs)) (first xs) (let* (condvar (gensym)) `(let* (~condvar ~(first xs)) (if ~condvar ~condvar (or ~@(rest xs)))))))))')
 
+/*
 if (process.argv.length > 2) {
     env_set(repl_env, Symbol.for('*ARGV*'), process.argv.slice(3))
     REP(`(load-file "${process.argv[2]}")`)
@@ -159,5 +159,26 @@ while (true) {
         if (exc instanceof BlankException) { continue }
         if (exc.stack) { console.log(exc.stack) }
         else           { console.log(`Error: ${exc}`) }
-    }
+   }
 }
+*/
+
+window.REPL = function(line) {
+    if (line == null) {
+        return 'Error: Line was null';
+    }
+    try {
+        if (line) { return(REP(line)) }
+    } catch (exc) {
+        if (exc instanceof BlankException) { 
+            return 'Error: BlankException';
+        }
+        if (exc.stack) { return(exc.stack) }
+        else           { return(`Error: ${exc}`) }
+    }   
+};
+
+
+window.mal_test = function(string) {
+    console.log(string);
+};
