@@ -1,0 +1,4 @@
+* Remove all console.log() functions.
+* Find a way so that MAL can pass strings back to Phaser
+* Can we multi-process in javascript?
+
